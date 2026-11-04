@@ -1,0 +1,8 @@
+flask>=3.0
+mysql-connector-python>=8.4
+numpy
+opencv-python-headless
+Pillow
+python-dotenv
+torch>=2.2
+tqdm
