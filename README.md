@@ -1,5 +1,8 @@
 # Backend: U-Net tumor segmentation API (Flask + MySQL)
 
+**Deploying to Render + Aiven? Read DEPLOY.md.** The notes below are for running locally.
+
+
 ## 1. Install
 ```
 python -m venv venv && source venv/bin/activate      # Windows: venv\Scripts\activate
@@ -9,8 +12,8 @@ pip install -r requirements.txt
 
 ## 2. Database
 ```
-mysql -u root -p < schema.sql
-cp .env.example .env        # then put your MySQL password in .env
+cp .env.example .env        # set DB_URL to your Aiven URI, or use the DB_HOST/DB_USER/... lines for local MySQL
+# tables are created automatically on first connection (schema.sql is for reference)
 ```
 
 ## 3a. Quickest: use a public pretrained brain-MRI U-Net (no training)
@@ -47,7 +50,7 @@ Without `models/unet_best.pt` the server starts in DEMO mode (a crude brightness
 | POST | /api/predict | form-data: `image` (file), `threshold` (0.05 to 0.95) |
 | GET | /api/history | recent predictions |
 | GET / DELETE | /api/history/<id> | one prediction / remove it and its files |
-| GET | /files/<images|masks|overlays>/<name> | stored images |
+| GET | /files/<image|mask|overlay|thumb>/<id> | stored images (kept in MySQL) |
 
 If MySQL is down, /api/predict still returns the segmentation (with `saved: false`).
 Research prototype only. Not for clinical use.

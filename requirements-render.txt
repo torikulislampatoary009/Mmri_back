@@ -1,0 +1,10 @@
+# Used on Render: CPU-only PyTorch (the default wheel is several times larger and will not fit the free tier)
+--extra-index-url https://download.pytorch.org/whl/cpu
+flask>=3.0
+gunicorn>=22.0
+mysql-connector-python>=8.4
+numpy
+opencv-python-headless
+Pillow
+python-dotenv
+torch==2.5.1+cpu

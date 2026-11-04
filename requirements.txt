@@ -1,8 +1,9 @@
+# Local development (install the right PyTorch build for your machine first if you want a GPU)
 flask>=3.0
+gunicorn>=22.0
 mysql-connector-python>=8.4
 numpy
 opencv-python-headless
 Pillow
 python-dotenv
 torch>=2.2
-tqdm

@@ -45,7 +45,7 @@ class Segmenter:
         self.torch = torch
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         m = torch.hub.load("mateuszbuda/brain-segmentation-pytorch", "unet",
-                           in_channels=3, out_channels=1, init_features=32, pretrained=True)
+                           in_channels=3, out_channels=1, init_features=32, pretrained=True, trust_repo=True)
         self.model = m.to(self.device).eval()
         self.size = 256
         self.hub = True

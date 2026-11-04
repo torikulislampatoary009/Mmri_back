@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: tumor-seg-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-render.txt && python download_model.py
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: MODEL_SOURCE          # "hub" = public pretrained model; delete this entry to use models/unet_best.pt
+        value: hub
+      - key: TORCH_HOME
+        value: /opt/render/project/src/torch_cache
+      - key: DB_URL                # Aiven "Service URI"
+        sync: false
+      - key: DB_SSL_CA_PEM         # contents of Aiven's ca.pem
+        sync: false
+      - key: ALLOWED_ORIGIN        # your frontend's address, e.g. https://my-app.netlify.app
+        sync: false
