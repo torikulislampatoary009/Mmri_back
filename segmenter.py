@@ -64,7 +64,8 @@ class Segmenter:
             x = (x - x.mean()) / (x.std() + 1e-8)
         t = self.torch.from_numpy(x.transpose(2, 0, 1))[None].to(self.device)
         with self.torch.no_grad():
-            p = self.torch.sigmoid(self.model(t))[0, 0].cpu().numpy()
+            out = self.model(t)
+        p = (out if getattr(self, "hub", False) else self.torch.sigmoid(out))[0, 0].cpu().numpy()
         return cv2.resize(p, (w, h), interpolation=cv2.INTER_LINEAR)
 
     @staticmethod
